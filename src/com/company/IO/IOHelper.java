@@ -1,8 +1,6 @@
 package com.company.IO;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class IOHelper {
     private final String stdinFilePath;
@@ -22,11 +20,16 @@ public class IOHelper {
     }
 
     public void readStdin() throws IOException {
-        BufferedReader reader;
-        reader = new BufferedReader(new java.io.FileReader(stdinFilePath));
-        stdinHeader = reader.readLine();
-        stdoutCommands = reader.readLine();
-        reader.close();
+        try (BufferedReader reader = new BufferedReader(new java.io.FileReader(stdinFilePath))) {
+            stdinHeader = reader.readLine();
+            stdoutCommands = reader.readLine();
+        }
+    }
+
+    public void writeToStdout(String string) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(stdoutFilePath))) {
+            writer.write(string);
+        }
     }
 
     public String getStdinHeader() {

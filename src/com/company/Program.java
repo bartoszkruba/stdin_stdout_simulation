@@ -35,7 +35,12 @@ public class Program {
             SimulatedObject object = StdinIntepretor.createSimulatedObject(stdHeader, plane);
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Starting position is not on the plane");
-            System.out.println("Should write [-1, -1] to console");
+            String s = "[-1, -1]";
+            try {
+                iOHelper.writeToStdout(s);
+            } catch (IOException ex) {
+                System.out.println("Something went wrong: " + e.getMessage());
+            }
             return;
         } catch (NumberFormatException e) {
             System.out.println("Incorrect format, Please format you stdin file properly");

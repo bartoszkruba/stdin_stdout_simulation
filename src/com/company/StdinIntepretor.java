@@ -39,9 +39,8 @@ public class StdinIntepretor {
     }
 
     public static String performSimulation(String commands, SimulatedObject[][] plane, SimulatedObject object)
-            throws NumberFormatException {
+            throws RuntimeException {
 
-        String returnValue = "";
         ArrayList<Integer> numberCommands = new ArrayList<>();
 
         Arrays.stream(commands.split(",")).forEach(n -> {
@@ -53,28 +52,31 @@ public class StdinIntepretor {
         });
 
         for (int n : numberCommands) {
+            if (n == 0) {
+                System.out.println("Quiting simulation");
+                return "[" + object.getxPosition() + ", " + object.getyPosition() + "]";
+            }
             try {
                 interpretCommand(n, plane, object);
             } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("Object fall down!");
+                System.out.println("Object falls down!");
                 return "[-1, -1]";
             }
         }
 
-        return "[" + object.getxPosition() + ", " + object.getyPosition() + "]";
+        throw new RuntimeException("No stopping command");
     }
 
     private static void interpretCommand(int command, SimulatedObject[][] plane, SimulatedObject object)
             throws ArrayIndexOutOfBoundsException {
         switch (command) {
-            case 0:
-                System.out.println("Quiting simulation");
-                break;
             case 1:
                 System.out.println("Moving one step forward...");
+                moveObject(plane, object, true);
                 break;
             case 2:
                 System.out.println("Moving one step backward...");
+                moveObject(plane, object, false);
                 break;
             case 3:
                 System.out.println("Turning 90 degrees clockwise...");

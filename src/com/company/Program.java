@@ -56,9 +56,10 @@ public class Program {
             } catch (IOException e) {
 
             }
-
         } catch (NumberFormatException e) {
             System.out.println("Incorrect format, Please format you stdin file properly");
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

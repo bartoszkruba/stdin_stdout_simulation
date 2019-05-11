@@ -6,9 +6,9 @@ import com.company.model.SimulatedObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class StdinIntepretor {
+public class StdinInterpreter {
 
-    public StdinIntepretor() {
+    public StdinInterpreter() {
     }
 
     // Assumed that no decimal coordinates should be allowed

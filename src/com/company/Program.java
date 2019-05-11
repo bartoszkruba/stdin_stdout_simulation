@@ -25,7 +25,7 @@ public class Program {
             stdHeader = iOHelper.getStdinHeader();
             stdCommands = iOHelper.getStdoutCommands();
 
-            plane = StdinIntepretor.createPlane(stdHeader);
+            plane = StdinInterpreter.createPlane(stdHeader);
         } catch (IOException e) {
             System.out.println("Something went wrong: " + e.getMessage());
             return;
@@ -33,7 +33,7 @@ public class Program {
 
         try {
             //Assumed that that coordinates start at zero (0-3 is the possible range for 4X4 plane)
-            object = StdinIntepretor.createSimulatedObject(stdHeader, plane);
+            object = StdinInterpreter.createSimulatedObject(stdHeader, plane);
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Starting position is not on the plane");
             String s = "[-1, -1]";
@@ -50,7 +50,7 @@ public class Program {
 
         System.out.println("Running simulation...");
         try {
-            String s = StdinIntepretor.performSimulation(stdCommands, plane, object);
+            String s = StdinInterpreter.performSimulation(stdCommands, plane, object);
             try {
                 iOHelper.writeToStdout(s);
             } catch (IOException e) {

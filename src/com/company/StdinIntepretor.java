@@ -31,7 +31,7 @@ public class StdinIntepretor {
 
         System.out.println("Creating object with starting position " + x + "x" + y + "...");
 
-        SimulatedObject object = new SimulatedObject(Direction.NORTH, new int[x][y]);
+        SimulatedObject object = new SimulatedObject(Direction.NORTH, x, y);
 
         plane[x][y] = object;
 
@@ -61,7 +61,7 @@ public class StdinIntepretor {
             }
         }
 
-        return returnValue;
+        return "[" + object.getxPosition() + ", " + object.getyPosition() + "]";
     }
 
     private static void interpretCommand(int command, SimulatedObject[][] plane, SimulatedObject object)
@@ -86,13 +86,61 @@ public class StdinIntepretor {
         }
     }
 
-    private static void moveObject(SimulatedObject[][] plane, SimulatedObject object, int[][] newCoords) {
+    private static void moveObject(SimulatedObject[][] plane, SimulatedObject object, boolean forward)
+            throws ArrayIndexOutOfBoundsException {
+        Direction direction = object.getDirection();
+        int currX = object.getxPosition();
+        int currY = object.getyPosition();
+
+        plane[currX][currY] = null;
+
+        if (forward) {
+            switch (direction) {
+                case NORTH:
+                    plane[currX][currY - 1] = object;
+                    object.setyPosition(currY - 1);
+                    break;
+                case EAST:
+                    plane[currX + 1][currY] = object;
+                    object.setxPosition(currX + 1);
+                    break;
+                case SOUTH:
+                    plane[currX][currY + 1] = object;
+                    object.setyPosition(currY + 1);
+                    break;
+                case WEST:
+                    plane[currX - 1][currY] = object;
+                    object.setxPosition(currX - 1);
+                    break;
+            }
+        } else {
+            switch (direction) {
+                case NORTH:
+                    plane[currX][currY + 1] = object;
+                    object.setyPosition(currY + 1);
+                    break;
+                case EAST:
+                    plane[currX - 1][currY] = object;
+                    object.setxPosition(currX - 1);
+                    break;
+                case SOUTH:
+                    plane[currX][currY - 1] = object;
+                    object.setyPosition(currY - 1);
+                    break;
+                case WEST:
+                    plane[currX + 1][currY] = object;
+                    object.setxPosition(currX + 1);
+                    break;
+            }
+        }
 
     }
 
     private static void turnObject(SimulatedObject object, boolean clockwise) {
+        Direction direction = object.getDirection();
+
         if (clockwise) {
-            switch (object.getDirection()) {
+            switch (direction) {
                 case NORTH:
                     object.setDirection(Direction.EAST);
                     break;
@@ -107,7 +155,7 @@ public class StdinIntepretor {
                     break;
             }
         } else {
-            switch (object.getDirection()) {
+            switch (direction) {
                 case NORTH:
                     object.setDirection(Direction.WEST);
                     break;

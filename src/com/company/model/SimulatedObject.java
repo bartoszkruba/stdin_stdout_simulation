@@ -1,11 +1,12 @@
 package com.company.model;
 
 public class SimulatedObject {
-    Direction direction;
+    private Direction direction;
+    private int[][] position;
 
-
-    public SimulatedObject(Direction direction) {
+    public SimulatedObject(Direction direction, int[][] position) {
         this.direction = direction;
+        this.position = position;
     }
 
     public Direction getDirection() {

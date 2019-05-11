@@ -36,6 +36,10 @@ public class Program {
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Starting position is not on the plane");
             System.out.println("Should write [-1, -1] to console");
+            return;
+        } catch (NumberFormatException e) {
+            System.out.println("Incorrect format, Please format you stdin file properly");
+            return;
         }
     }
 }
